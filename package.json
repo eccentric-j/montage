@@ -1,0 +1,26 @@
+{
+  "name": "dad-montage",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jay <jayzawrotny@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build:css": "NODE_ENV=production yarn tailwind -i ./src/client/css/style.css -o ./public/css/style.css",
+    "watch:css": "yarn tailwind -i ./src/client/css/style.css -o ./public/css/style.css --watch",
+    "watch:js": "yarn shadow-cljs watch client",
+    "build:js": "yarn shadow-cljs release client"
+  },
+  "dependencies": {
+    "baconjs": "^3.0.17",
+    "dotenv": "^9.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "shadow-cljs": "^2.13.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.3.4",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.9"
+  }
+}

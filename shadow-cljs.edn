@@ -1,0 +1,18 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/client" "src/server"]
+
+ :dependencies
+ [[reagent/reagent "1.1.0" :exclusions [cljsjs/react cljsjs/react-dom]]
+  [kitchen-async/kitchen-async "0.1.0-SNAPSHOT"]]
+
+ :dev-http
+ {8000 {:root "public"}}
+
+ :builds
+ {:client {:target :browser
+           :output-dir "public/js/build"
+           :asset-path "/js"
+           :modules {:montage {:init-fn montage.main/-main}}
+           :devtools {:before-load montage.main/stop
+                      :after-load montage.main/start}}}}
