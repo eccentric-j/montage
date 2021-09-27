@@ -1,0 +1,13 @@
+#!/usr/bin/env lumo
+
+(ns scripts.collect-photos
+  (:require
+   [cljs.pprint :refer [pprint]]
+   ["fs" :as fs]))
+
+
+(def files (-> (.readdirSync fs "./public/img" #js {:encoding "utf-8"})
+               (js->clj)))
+
+
+(pprint files)

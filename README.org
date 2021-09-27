@@ -1,1 +1,23 @@
 #+title: Dad Montage
+
+* Get Started
+
+#+begin_src shell
+yarn install
+#+end_src
+
+* Scripts
+
+** Start Development Server
+
+#+begin_src shell
+yarn start
+#+end_src
+
+Then visit [[http://localhost:8000][http://localhost:8000]]
+
+** Collect Photos
+
+#+begin_src bash
+yarn collect-photos
+#+end_src

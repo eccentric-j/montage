@@ -34,8 +34,10 @@
   (apply (.-mergeAll bacon) streams))
 
 (defn from-promise
-  [promise can-abort]
-  (.fromPromise bacon promise can-abort))
+  ([promise]
+   (.fromPromise bacon promise false))
+  ([promise can-abort]
+   (.fromPromise bacon promise can-abort)))
 
 (defn log
   [^EventStream stream]

@@ -9,7 +9,9 @@
     "build:css": "NODE_ENV=production yarn tailwind -i ./src/client/css/style.css -o ./public/css/style.css",
     "watch:css": "yarn tailwind -i ./src/client/css/style.css -o ./public/css/style.css --watch",
     "watch:js": "yarn shadow-cljs watch client",
-    "build:js": "yarn shadow-cljs release client"
+    "build:js": "yarn shadow-cljs release client",
+    "start": "concurrently -n js,css yarn:watch:js yarn:watch:css",
+    "collect-photos": "./scripts/collect-photos > public/photos.edn"
   },
   "dependencies": {
     "baconjs": "^3.0.17",
@@ -20,6 +22,8 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.3.4",
+    "concurrently": "^6.2.1",
+    "lumo-cljs": "^1.10.1",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.9"
   }

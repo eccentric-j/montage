@@ -83,11 +83,20 @@
     (-> actions
         (.map #(get-in % paths)))))
 
-(defn type->action
+(defn stream-action
   [payload-stream type]
   (-> payload-stream
       (.map (fn [payload]
               {:type type
                :payload payload}))))
 
-(def action* type->action)
+(defn create-action
+  [payload type]
+  {:type type
+   :payload payload})
+
+(defn gen-action
+  [type]
+  (fn [payload]
+    {:type type
+     :payload payload}))

@@ -13,7 +13,7 @@
   [machine states action]
   (if-let [reducer (get-in states [(:state machine) (:type action)])]
     (reducer machine action)
-    machine))
+    nil))
 
 (defn create
   [name states initial]
@@ -21,17 +21,20 @@
     {:reducer (fn [prev action]
                 (if (= action init)
                   initial
-                  (let [next (transition prev states action)]
-                    (.push bus {:type :fsm/transition
-                                :payload {:name name
-                                          :prev prev
-                                          :next next}})
-                    (when (:effect next)
-                      (.push bus (:effect next)))
-                    next)))
+                  (if-let [next (transition prev states action)]
+                    (do
+                      (.push bus {:type :fsm/transition
+                                  :payload {:name name
+                                            :prev prev
+                                            :next next}})
+                      (when (:effect next)
+                        (.push bus (:effect next)))
+                      next)
+                    prev)))
 
      :fx (fn [actions _deps]
            (-> bus
+               ; (.doAction println)
                (.takeUntil
                 (-> actions
                     (of-type :store/end)

@@ -3,6 +3,10 @@
    [reagent.core :as r]
    [framework.stream :refer [log Bus]]
    [framework.reactor :refer [init reduce-state of-type compose-fx combine-reducers]]
+   [montage.features.slideshow.feature]
+   [montage.features.settings.feature]
+   [montage.features.photos.feature]
+   [montage.features.playback.feature]
    [framework.features :refer [features]]))
 
 (defn log-actions-fx

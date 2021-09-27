@@ -2,3 +2,5 @@ node_modules
 public/js/build
 .shadow-cljs
 yarn-error.log
+public/img
+public/photos.edn
