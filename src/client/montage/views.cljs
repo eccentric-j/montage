@@ -1,7 +1,8 @@
 (ns montage.views
   (:require
    [montage.store :as store]
-   [montage.features.slideshow.views :as slideshow]))
+   [montage.features.slideshow.views :as slideshow]
+   [montage.features.playback.views :as playback]))
 
 (defn montage
   []
@@ -9,7 +10,9 @@
    {:class "montage bg-black m-auto relative"
     :style {:width "100vw"
             :height "56.25vw"}}
+   [:audio#music-player]
    (let [photos (get-in (store/get-state) [:photos :photos])]
-     (println "INCOMING PHOTOS" photos)
      (when (not-empty photos)
-       [slideshow/slideshow]))])
+       [:div.frame
+        [slideshow/slideshow]
+        [playback/controls]]))])

@@ -44,3 +44,13 @@
                      :fx (compose-fx
                           [(:fx playback-machine)
                            play-fx])})
+
+(defn play
+  []
+  {:type :playback/play
+   :payload nil})
+
+(defn pause
+  []
+  {:type :playback/pause
+   :payload nil})

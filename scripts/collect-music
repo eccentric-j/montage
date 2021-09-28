@@ -1,0 +1,15 @@
+#!/usr/bin/env lumo
+
+(ns scripts.collect-music
+  (:require
+   [cljs.pprint :refer [pprint]]
+   ["fs" :as fs]))
+
+
+(def files (-> (.readdirSync fs "./public/music" #js {:encoding "utf-8"})
+               (.filter #(and (.includes % ".m4a")
+                              (not (.includes % ".disabled"))))
+               (js->clj)))
+
+
+(pprint files)

@@ -15,7 +15,8 @@
    {:initial {:photos  []
               :last    0
               :current 0
-              :next    nil}
+              :next    nil
+              :prev    nil}
     :reducers
     {:photos/set
      (fn [state {photos :payload}]
@@ -40,7 +41,7 @@
      (fn [{:keys [current last] :as state} _action]
        (let [prev (dec current)
              prev (if (< prev 0) last prev)]
-         (assoc state :prev prev :next nil)))}}))
+         (assoc state :prev current :next prev)))}}))
 
 (defn next
   []
@@ -56,6 +57,19 @@
   [actions {:keys [state]}]
   (-> actions
       (fr/of-type :photos/next)
+      (.map (fn [_]
+              (let [{:keys [settings photos]} @state
+                    {:keys [current next]} photos
+                    {:keys [slide-transition]} settings]
+                {:from current
+                 :to   next
+                 :delay slide-transition})))
+      (.map slideshow/transition)))
+
+(defn prev-photo-fx
+  [actions {:keys [state]}]
+  (-> actions
+      (fr/of-type :photos/prev)
       (.map (fn [_]
               (let [{:keys [settings photos]} @state
                     {:keys [current next]} photos
@@ -85,6 +99,7 @@
 
 (def fx (fr/compose-fx
          [next-photo-fx
+          prev-photo-fx
           load-photos-on-initialize-fx
           update-current-after-transition-fx]))
 

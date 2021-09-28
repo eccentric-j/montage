@@ -3,10 +3,14 @@
 (ns scripts.collect-photos
   (:require
    [cljs.pprint :refer [pprint]]
+   [clojure.string :as s]
    ["fs" :as fs]))
 
 
 (def files (-> (.readdirSync fs "./public/img" #js {:encoding "utf-8"})
+               (.filter #(and (or (.includes (s/lower-case %) ".jp")
+                                  (.includes % ".mov"))
+                              (not (.includes % ".disabled"))))
                (js->clj)))
 
 

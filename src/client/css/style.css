@@ -2,8 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes zoom-in {
+	from {
+		transform: scale(1.1)
+	}
+	to {
+		transform: scale(1.0)
+	}
+}
+
 @layer components {
 	body {
-		@apply bg-black;
+		@apply bg-black text-white;
+	}
+
+
+	.frame:hover .controls {
+		@apply translate-y-0;
+	}
+
+	.zoom-in {
+		animation-duration: 8000ms;
+		animation-name: zoom-in;
+		animation-ease: linear;
 	}
 }

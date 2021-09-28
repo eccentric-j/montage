@@ -11,7 +11,8 @@
     "watch:js": "yarn shadow-cljs watch client",
     "build:js": "yarn shadow-cljs release client",
     "start": "concurrently -n js,css yarn:watch:js yarn:watch:css",
-    "collect-photos": "./scripts/collect-photos > public/photos.edn"
+    "collect-photos": "./scripts/collect-photos > public/photos.edn",
+    "collect-music": "./scripts/collect-music > public/music.edn"
   },
   "dependencies": {
     "baconjs": "^3.0.17",

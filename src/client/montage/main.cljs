@@ -14,7 +14,8 @@
 (defn start
   []
   (println "Starting montage")
-  (store/create))
+  (store/create)
+  (rdom/render [views/montage] (js/document.getElementById "app-root")))
 
 (defn -main
   []

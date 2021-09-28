@@ -20,17 +20,18 @@
   {:idle
    {:slideshow/transition
     (fn [_machine action]
-      {:state   :prepare
+      {:state   :prepare-out
        :context {:slide-transition (get-in action [:payload :slide-transition])
+                 :target (get-in action [:payload :from])
                  :from (get-in action [:payload :from])
                  :to (get-in action [:payload :to])}
        :effect  {:type :slideshow/wait
                  :payload {:delay 0
-                           :action {:type :slideshow/begin
+                           :action {:type :slideshow/start-out
                                     :payload nil}}}})}
 
-   :prepare
-   {:slideshow/begin
+   :prepare-out
+   {:slideshow/start-out
     (fn [machine _action]
       {:state   :transition-out
        :context (:context machine)
@@ -41,6 +42,15 @@
 
    :transition-out
    {:slideshow/transition-out-complete
+    (fn [machine _action]
+      {:state :prepare-in
+       :context (assoc (:context machine) :target (get-in machine [:context :to]))
+       :effect {:type :slideshow/wait
+                :payload {:delay 0
+                          :action {:type :slideshow/start-in
+                                   :payload nil}}}})}
+   :prepare-in
+   {:slideshow/start-in
     (fn [machine _action]
       {:state :transition-in
        :context (:context machine)
@@ -54,8 +64,8 @@
     (fn [machine _action]
       {:state   :idle
        :context (merge (:context machine)
-                       {:from nil
-                        :to   nil})
+                       {:from   nil
+                        :to     nil})
        :effect  {:type :slideshow/transitioned
                  :payload {:from (get-in machine [:context :from])
                            :to   (get-in machine [:context :to])}}})}})
@@ -64,7 +74,9 @@
   (fsm/create :slideshow
               states
               {:state   :idle
-               :context {}
+               :context {:from   nil
+                         :to     nil
+                         :target 0}
                :effect  nil}))
 
 (def reducer (:reducer slideshow))
