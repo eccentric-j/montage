@@ -4,7 +4,8 @@
    [framework.features :refer [register]]
    [framework.reactor :refer [of-type compose-fx]]
    [framework.stream :as stream]
-   [montage.features.photos.feature :as photos]))
+   [montage.features.photos.feature :as photos]
+   [montage.features.settings.feature :as settings]))
 
 (def states
   {:paused {:playback/play (fn [_machine _action]
@@ -32,8 +33,9 @@
       (of-type :playback/start-playback)
       (.flatMapLatest
        (fn []
-         (let [duration (get-in @state [:settings :photo-duration])]
-           (println "duration" duration (:settings @state))
+         (let [state @state
+               config (settings/select-config state)
+               duration (get-in config [:photo-duration])]
            (if duration
              (-> (stream/interval duration (photos/next))
                  (.takeUntil (-> actions

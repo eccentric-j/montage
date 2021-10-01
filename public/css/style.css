@@ -623,7 +623,7 @@ body {
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
-.frame:hover .controls {
+#app-root:hover .controls {
   --tw-translate-y: 0px;
   transform: var(--tw-transform);
 }

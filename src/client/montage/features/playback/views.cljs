@@ -4,7 +4,8 @@
    [reagent.core :as r]
    [montage.store :as store]
    [montage.features.photos.feature :as photos]
-   [montage.features.playback.feature :as playback]))
+   [montage.features.playback.feature :as playback]
+   [montage.features.settings.feature :as settings]))
 
 (defn prev
   [{:keys [class on-click]}]
@@ -106,4 +107,7 @@
       (when (not-empty photos)
         [:<>
          [:span (nth photos target)]
-         [:span (str (inc current) "/" (count photos))]])]]))
+         [:span (str (inc current) "/" (count photos))]
+         [settings
+          {:class "w-8 h-8"
+           :on-click #(store/dispatch (settings/open :config))}]])]]))

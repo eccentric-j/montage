@@ -40,7 +40,7 @@
               (reducer (if (= state ::undefined) initial state)
                        (assoc-in action [:meta :initial] initial))
 
-              :default
+              :else
               state))
           state))))
 
@@ -51,7 +51,8 @@
     (->> reducer-slices
          (reduce (fn slice-reduce
                    [state [slice-key reducer]]
-                   (assoc state slice-key (reducer (get state slice-key ::undefined) action)))
+                   (let [current (or (get state slice-key) (reducer nil init))]
+                     (assoc state slice-key (reducer current action))))
                  state))))
 
 (defn of-type?

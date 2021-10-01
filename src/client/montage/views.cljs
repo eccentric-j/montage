@@ -8,8 +8,8 @@
   []
   [:div
    {:class "montage bg-black m-auto relative"
-    :style {:width "100vw"
-            :height "56.25vw"}}
+    :style {:width "177.77vh"
+            :height "100vh"}}
    [:audio#music-player]
    (let [photos (get-in (store/get-state) [:photos :photos])]
      (when (not-empty photos)

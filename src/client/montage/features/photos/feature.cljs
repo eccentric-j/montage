@@ -7,6 +7,7 @@
    [framework.features :refer [register]]
    [framework.reactor :as fr]
    [montage.features.slideshow.feature :as slideshow]
+   [montage.features.settings.feature :as settings]
    [framework.stream :as stream]))
 
 
@@ -58,9 +59,11 @@
   (-> actions
       (fr/of-type :photos/next)
       (.map (fn [_]
-              (let [{:keys [settings photos]} @state
+              (let [state @state
+                    {:keys [photos]} state
                     {:keys [current next]} photos
-                    {:keys [slide-transition]} settings]
+                    config (settings/select-config state)
+                    {:keys [slide-transition]} config]
                 {:from current
                  :to   next
                  :delay slide-transition})))
@@ -71,9 +74,11 @@
   (-> actions
       (fr/of-type :photos/prev)
       (.map (fn [_]
-              (let [{:keys [settings photos]} @state
+              (let [state @state
+                    config (settings/select-config state)
+                    {:keys [photos]} @state
                     {:keys [current next]} photos
-                    {:keys [slide-transition]} settings]
+                    {:keys [slide-transition]} config]
                 {:from current
                  :to   next
                  :delay slide-transition})))

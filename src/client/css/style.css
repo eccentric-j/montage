@@ -17,7 +17,7 @@
 	}
 
 
-	.frame:hover .controls {
+	#app-root:hover .controls {
 		@apply translate-y-0;
 	}
 

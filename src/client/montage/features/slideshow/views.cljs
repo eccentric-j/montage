@@ -19,7 +19,6 @@
         {:keys [target]} context
         {:keys [photos]} (get-in (store/get-state) [:photos])
         current-photo (nth photos target)]
-    (println "CLASS NAME" (get-classname state))
     [:div
      {:key target
       :class (r/class-names

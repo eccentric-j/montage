@@ -4,3 +4,5 @@ public/js/build
 yarn-error.log
 public/img
 public/photos.edn
+public/music.edn
+public/music
