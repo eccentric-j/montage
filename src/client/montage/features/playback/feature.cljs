@@ -56,3 +56,7 @@
   []
   {:type :playback/pause
    :payload nil})
+
+(defn select-state
+  [state]
+  (get-in state [:playback :state]))
