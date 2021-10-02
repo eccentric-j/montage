@@ -768,6 +768,10 @@ body {
   transform: var(--tw-transform);
 }
 
+.cursor-move {
+  cursor: move;
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -855,6 +859,14 @@ body {
 
 .opacity-0 {
   opacity: 0;
+}
+
+.opacity-20 {
+  opacity: 0.2;
+}
+
+.opacity-40 {
+  opacity: 0.4;
 }
 
 .filter {

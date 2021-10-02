@@ -7,6 +7,7 @@
    [montage.features.settings.feature]
    [montage.features.photos.feature]
    [montage.features.playback.feature]
+   [montage.features.reorder.feature]
    [framework.features :refer [features]]))
 
 (defn log-actions-fx
