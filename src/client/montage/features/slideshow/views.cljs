@@ -1,7 +1,8 @@
 (ns montage.features.slideshow.views
   (:require
    [reagent.core :as r]
-   [montage.store :as store]))
+   [montage.store :as store]
+   [montage.features.photos.feature :as photos]))
 
 (defn get-classname
   [state]
@@ -17,7 +18,7 @@
   (let [{:keys [state context]} (get-in (store/get-state) [:slideshow])
         playback-state (get-in (store/get-state) [:playback :state])
         {:keys [target]} context
-        {:keys [photos]} (get-in (store/get-state) [:photos])
+        photos (photos/select-photos (store/get-state))
         current-photo (nth photos target)]
     [:div
      {:key target

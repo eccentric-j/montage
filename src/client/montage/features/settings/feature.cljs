@@ -11,52 +11,34 @@
 
    :settings/set-duration
    (fn [state action]
-     (assoc state :duration (:payload action)))})
+     (assoc state :photo-duration (:payload action)))})
 
 (def reducer (fr/assign-reducers {:initial {:slide-transition 1000
                                             :photo-duration   7000}
                                   :reducers reducers}))
 
-(defn set-transition
-  "
-  Update transition for the length of time animating a fade out of the
-  current photo and a fade in of the next photo
-  "
-  [transition-ms]
-  {:type    :settings/set-transition
-   :payload transition-ms})
-
-(defn set-duration
-  "
-  Update duration for the length of time a photo is presented before
-  transitioning to the next
-  "
-  [duration-ms]
-  {:type :settings/set-duration
-   :payload duration-ms})
-
-
-
 (def states
-  {:closed {:settings/open (fn [_machine action]
-                             {:state   :open
-                              :context {:target (:payload action)}
-                              :effect  {:type :settings/opened
-                                        :payload (:payload action)}})}
+  {:closed {:settings/toggle
+            (fn [_machine action]
+              {:state   :open
+               :context {:target (:payload action)}
+               :effect  {:type :settings/opened
+                         :payload (:payload action)}})}
 
-   :open {:settings/close (fn [_machine action]
-                            {:state :closed
-                             :context {:target nil}
-                             :effect {:type :settings/closed
-                                      :payload (:payload action)}})
-
-          :settings/open (fn [_machine action]
-                           {:state :closed
-                            :context {:target nil}
-                            :effect {:type :slideshow/wait
-                                     :payload {:delay 500
-                                               :action {:type :slideshow/open
-                                                        :payload (:payload action)}}}})}})
+   :open {:settings/toggle
+          (fn [{:keys [context]} action]
+            (println "settings/toggle" {:context context :action (:payload action)})
+            (if (= (:target context) (:payload action))
+              {:state :closed
+               :context {:target nil}
+               :effect {:type :settings/closed
+                        :payload (:payload action)}}
+              {:state :closed
+               :context {:target nil}
+               :effect {:type :slideshow/wait
+                        :payload {:delay 500
+                                  :action {:type :settings/open
+                                           :payload (:payload action)}}}}))}})
 
 (def panel-machine
   (fsm/create :settings/panel
@@ -77,7 +59,25 @@
                                                     :panel  (:reducer panel-machine)})
                      :fx (fr/compose-fx [(:fx panel-machine)])})
 
-(defn open
+(defn set-transition
+  "
+  Update transition for the length of time animating a fade out of the
+  current photo and a fade in of the next photo
+  "
+  [transition-ms]
+  {:type    :settings/set-transition
+   :payload transition-ms})
+
+(defn set-duration
+  "
+  Update duration for the length of time a photo is presented before
+  transitioning to the next
+  "
+  [duration-ms]
+  {:type :settings/set-duration
+   :payload duration-ms})
+
+(defn toggle
   [panel]
-  {:type :settings/open
+  {:type :settings/toggle
    :payload panel})

@@ -13,7 +13,7 @@
 
 (def reducer
   (fr/assign-reducers
-   {:initial {:photos  []
+   {:initial {:collection  []
               :last    0
               :current 0
               :next    nil
@@ -22,7 +22,7 @@
     {:photos/set
      (fn [state {photos :payload}]
        (assoc state
-              :photos photos
+              :collection photos
               :last (dec (count photos))))
 
      :photos/update-current
@@ -110,3 +110,11 @@
 
 (register :photos {:reducer reducer
                    :fx      fx})
+
+(defn select-photos
+  [state]
+  (get-in state [:photos :collection]))
+
+(defn select-current
+  [state]
+  (get-in state [:photos :current]))

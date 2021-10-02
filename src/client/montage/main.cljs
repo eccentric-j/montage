@@ -27,7 +27,7 @@
   (rdom/render [views/montage] (js/document.getElementById "app-root")))
 
 (comment
-  (get-in (store/get-state) [:photos :current])
+  (get-in (store/get-state) [:settings :panel :context :target])
   (store/dispatch
    {:type :playback/pause
     :payload nil})
