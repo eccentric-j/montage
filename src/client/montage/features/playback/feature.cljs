@@ -12,13 +12,24 @@
                              {:state   :playing
                               :context {}
                               :effect  {:type :playback/start-playback
-                                        :payload nil}})}
+                                        :payload nil}})
+            :playback/resume-photos
+            (fn [_macihine _action]
+              {:state :playing
+               :context {}
+               :effect {:type :playback/start-playback
+                        :payload nil}})}
 
    :playing {:playback/pause (fn [_machine _action]
                                {:state :paused
                                 :context {}
                                 :effect {:type :playback/pause-playback
-                                         :payload nil}})}})
+                                         :payload nil}})
+             :playback/pause-photos
+             (fn [_macine _action]
+               {:state :paused
+                :context {}
+                :effect nil})}})
 
 (def playback-machine
   (fsm/create :playback
@@ -39,7 +50,7 @@
            (if duration
              (-> (stream/interval duration (photos/next))
                  (.takeUntil (-> actions
-                                 (of-type :playback/pause))))
+                                 (of-type :playback/pause :playback/pause-photos))))
              (stream/of nil)))))))
 
 (register :playback {:reducer (:reducer playback-machine)
@@ -55,6 +66,16 @@
 (defn pause
   []
   {:type :playback/pause
+   :payload nil})
+
+(defn pause-photos
+  []
+  {:type :playback/pause-photos
+   :payload nil})
+
+(defn resume-photos
+  []
+  {:type :playback/resume-photos
    :payload nil})
 
 (defn select-state
