@@ -697,6 +697,10 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -867,6 +871,16 @@ body {
 
 .opacity-40 {
   opacity: 0.4;
+}
+
+.brightness-150 {
+  --tw-brightness: brightness(1.5);
+  filter: var(--tw-filter);
+}
+
+.brightness-110 {
+  --tw-brightness: brightness(1.1);
+  filter: var(--tw-filter);
 }
 
 .filter {

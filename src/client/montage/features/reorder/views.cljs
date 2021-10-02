@@ -7,16 +7,19 @@
    [montage.features.settings.views :as settings]))
 
 (defn photo-item
-  [{:keys [photo source target]}]
+  [{:keys [photo source target class-name]}]
   [:div
    (when (and target source (= target photo))
      [photo-item
       {:photo source
        :source nil
-       :target nil}])
+       :target nil
+       :class-name "brightness-110 mb-4"}])
    [:div.photo
     {:key photo
-     :class (when (= photo source) "opacity-40")
+     :class (r/class-names
+             class-name
+             (when (= photo source) "opacity-40"))
      :data-photo photo
      :on-mouse-down #(do
                        (.preventDefault %)

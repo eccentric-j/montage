@@ -25,12 +25,22 @@
               :collection photos
               :last (dec (count photos))))
 
+     :photos/reorder
+     (fn [state {update :payload}]
+       (let [{:keys [move above]} update
+             {:keys [collection]} state
+             collection (->> collection
+                             (filter #(not= % move)))
+             [before after] (split-with (complement #{above}) collection)
+             after (cons move after)]
+         (assoc state
+                :collection (concat before after))))
+
      :photos/update-current
      (fn [state {current :payload}]
        (assoc state
               :current current
               :next    nil))
-
 
      :photos/next
      (fn [{:keys [current last] :as state} _action]
@@ -118,3 +128,9 @@
 (defn select-current
   [state]
   (get-in state [:photos :current]))
+
+(defn reorder
+  [source target]
+  {:type :photos/reorder
+   :payload {:move source
+             :above target}})

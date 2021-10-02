@@ -1,9 +1,11 @@
 (ns montage.features.reorder.feature
   (:require
+   [cljs.pprint :refer [pprint]]
    [framework.fsm :as fsm]
    [framework.features :refer [register]]
    [framework.reactor :as fr]
-   [framework.stream :as stream]))
+   [framework.stream :as stream]
+   [montage.features.photos.feature :as photos]))
 
 (def states
   {:idle {:reorder/mousedown
@@ -30,9 +32,7 @@
                  :context (merge context
                                  {:source nil
                                   :y 0})
-                 :effect  {:type :reorder/update
-                           :payload {:source (:source context)
-                                     :target (:target context)}}})}})
+                 :effect  (photos/reorder (:source context) (:target context))})}})
 
 (def reorder-machine
   (fsm/create :reorder
@@ -116,11 +116,22 @@
                           :meta {:y y :source source}
                           :payload photo-url})))))))))
 
+(defn copy-order-fx
+  [actions {:keys [state]}]
+  (-> actions
+      (fr/of-type :photos/reorder)
+      (.doAction (fn [_]
+                   (let [photos (photos/select-photos @state)]
+                     (js/window.navigator.clipboard.writeText
+                      (with-out-str (pprint photos))))))
+      (.filter (constantly false))))
+
 (register :reorder {:reducer (:reducer reorder-machine)
                     :fx (fr/compose-fx
                          [(:fx reorder-machine)
                           start-dragging-fx
-                          select-target-fx])})
+                          select-target-fx
+                          copy-order-fx])})
 
 
 (defn mousedown
