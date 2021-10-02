@@ -668,6 +668,22 @@ body {
   bottom: 4rem;
 }
 
+.bottom-8 {
+  bottom: 2rem;
+}
+
+.bottom-12 {
+  bottom: 3rem;
+}
+
+.bottom-10 {
+  bottom: 2.5rem;
+}
+
+.bottom-11 {
+  bottom: 2.75rem;
+}
+
 .m-auto {
   margin: auto;
 }
@@ -689,6 +705,10 @@ body {
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -699,6 +719,10 @@ body {
 
 .h-40 {
   height: 10rem;
+}
+
+.max-h-full {
+  max-height: 100%;
 }
 
 .w-8 {
@@ -772,6 +796,10 @@ body {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .bg-black {

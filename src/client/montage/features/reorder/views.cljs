@@ -11,13 +11,13 @@
    (let [state (store/get-state)
          photos (photos/select-photos state)]
      [:div.photos-list
-      {:class "flex flex-col gap-4"}
+      {:class "flex flex-col gap-4 overflow-y-auto max-h-full"}
       (for [[i photo] (map-indexed vector photos)]
         [:div.photo
          {:key photo}
          [:div
           {:class "w-60 h-40 bg-cover bg-center m-auto"
            :style {:background-image (str "url(/img/" photo ")")}}]
-         [:span
+         [:span.photo-url
           {:class "text-center block text-white text-xs"}
           photo]])])])

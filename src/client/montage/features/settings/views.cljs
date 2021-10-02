@@ -9,7 +9,7 @@
   (into
    [:div.panel
     {:class (r/class-names
-             "fixed right-0 top-0 bottom-16 bg-black bg-opacity-60 p-4 transform transition-transform duration-500"
+             "fixed right-0 top-0 bottom-12 bg-black bg-opacity-60 p-4 transform transition-transform duration-500"
              class
              (if active "active translate-x-0" "translate-x-full"))}]
    children))
