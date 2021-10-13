@@ -12,8 +12,8 @@
   []
   [:div
    {:class "montage bg-black m-auto relative overflow-hidden"
-    :style {:width "177.77vh"
-            :height "100vh"}}
+    :style {:width "100vw"
+            :height "56.25vw"}}
    [music/music-player]
    (let [photos (photos/select-photos (store/get-state))]
      (when (not-empty photos)

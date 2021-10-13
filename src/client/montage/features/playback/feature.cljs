@@ -13,12 +13,7 @@
                               :context {}
                               :effect  {:type :playback/start-playback
                                         :payload nil}})
-            :playback/resume-photos
-            (fn [_macihine _action]
-              {:state :playing
-               :context {}
-               :effect {:type :playback/start-playback
-                        :payload nil}})}
+            }
 
    :playing {:playback/pause (fn [_machine _action]
                                {:state :paused
@@ -27,9 +22,16 @@
                                          :payload nil}})
              :playback/pause-photos
              (fn [_macine _action]
-               {:state :paused
+               {:state :playing
                 :context {}
-                :effect nil})}})
+                :effect nil})
+
+             :playback/resume-photos
+             (fn [_machine _action]
+               {:state :playing
+                :context {}
+                :effect {:type :playback/start-playback
+                         :payload nil}})}})
 
 (def playback-machine
   (fsm/create :playback

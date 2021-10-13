@@ -13,11 +13,11 @@
 
 @layer components {
 	body {
-		@apply bg-black text-white;
+		@apply bg-black text-white h-screen w-screen;
 	}
 
 
-	#app-root:hover .controls {
+	body:hover .controls {
 		@apply translate-y-0;
 	}
 
